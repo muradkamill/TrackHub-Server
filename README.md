@@ -35,11 +35,28 @@ The project is built upon a foundation of current and proven technologies.
 | **Language** | **C# 12** | A reliable and modern language enabling robust software development. |
 
 ---
+## 🏗️ Project Structure (Clean Architecture)
 
-## 🏗️ Architectural Structure (Clean Architecture)
-
-The project is organized using a standard Clean Architecture pattern, ensuring clear separation of concerns:
-TrackHub/ ┣ 📁 Domain/ → Core Business Rules, Entities, and Shared Interfaces. (The Innermost Layer) ┣ 📁 Application/ → Use Cases, Service Logic, and Data Transfer Objects (DTOs). ┣ 📁 Infrastructure/ → External Dependencies: EF Core Context, Data Access (Repositories), and External Services. ┣ 📁 API/ → Entry Point: API Controllers, Middleware, and Startup Configuration. ┗ 📄 README.md
+TrackHub/
+├── 📁 **Domain/** (Innermost Layer)
+│   ├── Entities/ (Core Business Objects)
+│   ├── ValueObjects/
+│   └── Interfaces/ (Contracts for Repositories and Services)
+|
+├── 📁 **Application/** (Business Logic)
+│   ├── Features/ (Use Cases: Commands and Queries)
+│   ├── DTOs/ (Data Transfer Objects)
+│   └── Services/ (Application-level services/handlers)
+|
+├── 📁 **Infrastructure/** (External Dependencies)
+│   ├── Persistence/ (EF Core Context and Migrations)
+│   ├── Repositories/ (Concrete implementations of Domain Interfaces)
+│   └── Services/ (External API/Email/File Storage integrations)
+|
+└── 📁 **API/** (Entry Point)
+    ├── Controllers/
+    ├── Middleware/
+    └── appsettings.json
 
 ---
 
