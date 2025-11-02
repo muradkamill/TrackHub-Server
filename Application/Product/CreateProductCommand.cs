@@ -23,9 +23,9 @@ public class CreateProductCommand
             RuleFor(x => x.Description)
                 .MaximumLength(200).WithMessage("Description must be maximum 200 character");
             RuleFor(x => x.Weight).InclusiveBetween(0, 500);
-            RuleFor(x => x.Latitude).InclusiveBetween(-90, 90).WithMessage("Latitude must be between -90 and 90");
-            RuleFor(x => x.Longitude).InclusiveBetween(-180, 180).WithMessage("Longitude must be between -90 and 90");
-            RuleFor(x => x.Longitude).InclusiveBetween(0,100000).WithMessage("Product price must be between 0 and 100000");
+            // RuleFor(x => x.Latitude).InclusiveBetween(-90, 90).WithMessage("Latitude must be between -90 and 90");
+            // RuleFor(x => x.Longitude).InclusiveBetween(-180, 180).WithMessage("Longitude must be between -180 and 180");
+            RuleFor(x => x.Price).InclusiveBetween(0,100000).WithMessage("Product price must be between 0 and 100000");
             RuleFor(x => x.Images)
                 .NotEmpty().WithMessage("At least one image is required")
                 .Must(images => images.All(i => i.Length > 0))
@@ -51,15 +51,15 @@ public class CreateProductCommand
     }
 
     
-    public class CreateProductRequestHandler(IProductRepository iProductRepository,ISubCategoryRepository iSubCategoryRepository,IUnitOfWork iUnitOfWork,IWebHostEnvironment env):IRequestHandler<CreateProductRequest,Result>
+    public class CreateProductRequestHandler(IProductRepository iProductRepository,ISubCategoryRepository iSubCategoryRepository,IUnitOfWork iUnitOfWork,IWebHostEnvironment env,IHttpContextAccessor httpContextAccessor):IRequestHandler<CreateProductRequest,Result>
     {
         public async Task<Result> Handle(CreateProductRequest request, CancellationToken cancellationToken)
         {
             var  imagePaths=new List<string>();
-            var personFin = "820RD60";
-            // var personFin = httpContextAccessor.HttpContext?.User.FindFirst("fin")?.Value;
-            // if (string.IsNullOrWhiteSpace(personFin))
-            //     return Result.Fail("Unauthorized access !");
+            // var personFin = "820RD60";
+            var personFin = httpContextAccessor.HttpContext?.User.FindFirst("fin")?.Value;
+            if (string.IsNullOrWhiteSpace(personFin))
+                return Result.Fail("Unauthorized access !");
             if (!request.Images.Any())
             {
                 return Result.Fail("Image is not valid");

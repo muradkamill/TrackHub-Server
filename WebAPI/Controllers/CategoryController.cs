@@ -13,11 +13,28 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CategoryController(ISender sender) : ControllerBase
     {
+        [AllowAnonymous]
         [EnableQuery]
         [HttpGet]
         public async Task<IActionResult> GetAllCategories(CancellationToken cancellationToken)
         {
             var categories=await sender.Send(new GetAllCategoryQuery.GetAllCategoryRequest(), cancellationToken);
+            if (categories.IsFailed)
+            {
+                return BadRequest(categories.Errors.Select(x => x.Message));
+            }
+
+            return Ok(categories.Value);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{categoryId}/get-category-name")]
+        public async Task<IActionResult> GetCategoryName(int categoryId,CancellationToken cancellationToken)
+        {
+            var categories=await sender.Send(new GetCategoryName.GetCategoryNameRequest()
+            {
+                CategoryId = categoryId
+            }, cancellationToken);
             if (categories.IsFailed)
             {
                 return BadRequest(categories.Errors.Select(x => x.Message));
@@ -41,7 +58,7 @@ namespace WebAPI.Controllers
             return Ok(categories.Value);
         }
         [AllowAnonymous]
-        [HttpGet("{categoryId:int}/get-products-by-subcategory")]
+        [HttpGet("{categoryId:int}/get-products-by-category")]
         public async Task<IActionResult> GetProductsByCategory(int categoryId,CancellationToken cancellationToken)
         {
             var products=await sender.Send(new GetProductsByCategoryName.GetProductsByCategoryNameRequest()

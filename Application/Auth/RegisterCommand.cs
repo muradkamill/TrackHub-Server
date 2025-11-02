@@ -29,11 +29,11 @@ public class RegisterCommand
             RuleFor(x => x.Password).MinimumLength(8).WithMessage("Password must be minimum 8 character").NotEmpty()
                 .WithMessage("Password  cannot be empty");
             RuleFor(x => x.Name)
-                .MinimumLength(3).WithMessage("FirstName must be minimum 3 character")
-                .MaximumLength(15).WithMessage("FirstName must be maximum 15 character");
+                .MinimumLength(3).WithMessage("Name must be minimum 3 character")
+                .MaximumLength(15).WithMessage("Name must be maximum 15 character");
             RuleFor(x => x.SurName)
-                .MinimumLength(3).WithMessage("LastName must be minimum 3 character")
-                .MaximumLength(15).WithMessage("LastName must be maximum 15 character");
+                .MinimumLength(3).WithMessage("SurName must be minimum 3 character")
+                .MaximumLength(15).WithMessage("SurName must be maximum 15 character");
         }
     }
 

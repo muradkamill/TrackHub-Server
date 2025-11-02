@@ -53,8 +53,22 @@ namespace WebAPI.Controllers
             }
 
             return Ok(products.Value);
+        }
 
+        [AllowAnonymous]
+        [HttpGet("{subCategoryId:int}/get-subcategory-name")]
+        public async Task<IActionResult> GetSubCategoryName(int subCategoryId,CancellationToken cancellationToken)
+        {
+            var products = await sender.Send(new GetSubCategoryName.GetSubCategoryNameRequest
+            {
+                SubCategoryId = subCategoryId
+            },cancellationToken);
+            if (products.IsFailed)
+            {
+                return BadRequest(products.Errors.Select(x => x.Message));
+            }
 
+            return Ok(products.Value);
         }
         
         

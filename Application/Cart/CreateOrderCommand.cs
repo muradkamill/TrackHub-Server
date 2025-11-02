@@ -47,6 +47,7 @@ public class CreateOrderCommand
             var personFin = httpContextAccessor.HttpContext!.User.FindFirst("fin")?.Value;
             if (string.IsNullOrWhiteSpace(personFin))
                 return Result.Fail("Unauthorized access!");
+            // var personFin = "2222222";
             var textInfo = CultureInfo.InvariantCulture.TextInfo;
             request.VehicleType = textInfo.ToTitleCase(request.VehicleType.ToLowerInvariant());
             if (!Enum.IsDefined(typeof(CreateCourierApplication.VehicleTypeEnum),request.VehicleType))
@@ -67,11 +68,11 @@ public class CreateOrderCommand
 
                 }
                 var product = await iProductRepository.FirstOrDefaultAsync(x => x.Id == cart.ProductId, cancellationToken);
+                if (product == null)
+                {
+                    continue;
+                }
                 var price = product.Price * cart.Quantity;
-                // if (!await iProductRepository.AnyAsync(x => x.Id == cart.ProductId,cancellationToken))
-                // {
-                //     return Result.Fail("Product is not found!");
-                // }
                 var person = await iPersonRepository.FirstOrDefaultAsync(x=>x.Fin==product.OwnerFin, cancellationToken);
                 person.Balance += price;
                 cart.OrderStatus = nameof(OrderStatus.CourierPending);

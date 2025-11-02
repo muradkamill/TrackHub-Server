@@ -15,10 +15,7 @@ public class GetByIdQuery
     public class GetByIdResponse()
     {
         public string Fin { get; set; } = default!;
-        public string FirstName { get; set; } = default!;
-        public string LastName { get; set; } = default!;
         public string Role { get; set; } = default!;
-        public AddressEntity Address { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string SurName { get; set; } = default!;
         public string Mail { get; set; } = default!;

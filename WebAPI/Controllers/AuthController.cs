@@ -27,7 +27,14 @@ namespace WebAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginCommand.LoginRequest request,CancellationToken cancellationToken)
         {
+            // if (request == null)
+            //     return BadRequest("Login request body cannot be null.");
+
+
             var person = await sender.Send(request, cancellationToken);
+            // if (person == null)
+            //     return BadRequest("Login response is null.");
+
             if (person.IsFailed)
             {
                 return BadRequest(person.Errors.Select(x => x.Message));

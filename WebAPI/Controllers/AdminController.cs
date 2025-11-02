@@ -9,7 +9,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AdminController(ISender sender) : ControllerBase
     {
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         [HttpGet("pending-courier-application")]
         public async Task<IActionResult> GetPendingApplication(CancellationToken cancellationToken)
         {
@@ -21,18 +21,19 @@ namespace WebAPI.Controllers
 
             return Ok(pendingApplications.Value);
         }
-        [Authorize(Roles = "Admin")]
 
+
+        // [Authorize(Roles = "Admin")]
         [HttpGet("get-suggestions")]
         public async Task<IActionResult> GetSuggestions(CancellationToken cancellationToken)
         {
-            var pendingApplications =await sender.Send(new GetSuggestions.GetSuggestionsRequest(),cancellationToken);
-            if (pendingApplications.IsFailed)
+            var suggestions =await sender.Send(new GetSuggestions.GetSuggestionsRequest(),cancellationToken);
+            if (suggestions.IsFailed)
             {
-                return BadRequest(pendingApplications.Errors.Select(x => x.Message));
+                return BadRequest(suggestions.Errors.Select(x => x.Message));
             }
 
-            return Ok(pendingApplications.Value);
+            return Ok(suggestions.Value);
         }
 
         [Authorize(Roles = "Admin")]

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Application;
 using Infrastructure;
 using Infrastructure.SignalR;
@@ -6,17 +7,6 @@ using Scalar.AspNetCore;
 using WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAngular",
-        policy =>
-        {
-            policy.WithOrigins("http://localhost:4200") // Angular URL
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-                .AllowCredentials(); // eğer cookie / auth kullanıyorsan
-        });
-});
 builder.Services.AddSingleton(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 builder.Services.AddOpenApi();
@@ -31,9 +21,29 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 builder.Services.AddSignalR();
 
-var app = builder.Build();
-app.UseCors("AllowAngular");
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
+var myAllowSpecificOrigins = "AllowAngular";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        policy  =>
+        {
+            policy
+                .WithOrigins("http://localhost:4200") // Angular portunu ekle
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+});
+var app = builder.Build();
+app.UseRouting();
+app.UseCors("AllowAngular");
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseStaticFiles();
 app.UseStaticFiles();

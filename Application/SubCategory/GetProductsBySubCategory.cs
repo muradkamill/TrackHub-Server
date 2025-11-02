@@ -30,10 +30,6 @@ public class GetProductsBySubCategory
     {
         public async Task<Result<IQueryable<GetProductsBySubCategoryResponse>>> Handle(GetProductsBySubCategoryRequest request, CancellationToken cancellationToken)
         {
-            if (!await iProductRepository.AnyAsync(x=>x.SubCategoryId==request.SubCategoryId,cancellationToken))
-            {
-                return Result.Fail("Product is not Found!");
-            }
             var products =iProductRepository.Where(x => x.SubCategoryId == request.SubCategoryId).ToList();
             var response = products.Adapt<List<GetProductsBySubCategoryResponse>>();
             foreach (var product in response)

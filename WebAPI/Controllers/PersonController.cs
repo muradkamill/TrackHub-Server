@@ -51,9 +51,9 @@ namespace WebAPI.Controllers
             return Ok(products.Value);
         }
         
-        // [Authorize]
-        [HttpPut]
-        public async Task<IActionResult> UpdateById(UpdateByIdCommand.UpdateByIdRequest request,CancellationToken cancellationToken)
+        [Authorize]
+        [HttpPut("change-profile-photo")]
+        public async Task<IActionResult> UpdateById([FromForm]UpdateProfilePhoto.UpdateProfilePhotoRequest request,CancellationToken cancellationToken)
         {
             var person = await sender.Send(request, cancellationToken);
             if (person.IsFailed)
@@ -66,7 +66,7 @@ namespace WebAPI.Controllers
 
         [Authorize]
         [HttpPut("update-password")]
-        public async Task<IActionResult> UpdatePassword(UpdatePasswordCommand.UpdatePasswordCommandRequest request,CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdatePassword([FromForm] UpdatePasswordCommand.UpdatePasswordCommandRequest request,CancellationToken cancellationToken)
         {
             var password =await sender.Send(request, cancellationToken);
             if (password.IsFailed)
@@ -89,9 +89,9 @@ namespace WebAPI.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize]
         [HttpPost("create-courier-application")]
-        public async Task<IActionResult> CreateCourierProfile(CreateCourierApplication.CreateApplicationCourierRequest request,CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateCourierProfile([FromForm]CreateCourierApplication.CreateApplicationCourierRequest request,CancellationToken cancellationToken)
         {
             var courier= await sender.Send(request, cancellationToken);
             if (courier.IsFailed)

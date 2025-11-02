@@ -28,12 +28,8 @@ public class GetActiveCarts
         public decimal Price { get; set; }
 
         public string OrderStatus { get; set; } = default!;
-
-
-
         public double Latitude { get; set; }
         public double Longitude { get; set; }
-
         public decimal CourierFee { get; set; }
         public DateTime DeliveredDate { get; set; }
 

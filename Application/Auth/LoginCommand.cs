@@ -12,18 +12,6 @@ namespace Application.Auth;
 
 public class LoginCommand()
 {
-    public class RegisterValidation : AbstractValidator<LoginRequest>
-    {
-        public RegisterValidation()
-        {
-            RuleFor(x => x.Fin)
-                .Length(7).WithMessage("FIN must be 7 character")
-                .NotEmpty().WithMessage("FIN cannot be empty");
-            RuleFor(x => x.Password).MinimumLength(8).WithMessage("Password must be minimum 8 character").NotEmpty().WithMessage("Password  cannot be empty");
-            
-
-        }
-    }
     public class LoginRequest():IRequest<Result<LoginResponse>>
     {
         public string Fin { get; set; } = default!;
@@ -56,6 +44,7 @@ public class LoginCommand()
 
             person.RefreshToken = Methods.CreateRefreshToken();
             person.RefreshTokenExpiryDate=DateTime.UtcNow.AddDays(7);
+            iPersonRepository.Update(person);
             await iUnitOfWork.SaveChangesAsync(cancellationToken);
             return Result.Ok(new LoginResponse()
             {

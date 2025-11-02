@@ -13,10 +13,10 @@ public class GetPendingApplications
 
     public class GetPendingApplicationsResponse()
     {
-        public string FirstName { get; set; } = default!;
-        public string LastName { get; set; } = default!;
-        public AddressEntity Address { get; set; } = default!;
-        public string? ImageUrl { get; set; } = default!;
+        public string Fin { get; set; } = default!;
+        public string Name { get; set; } = default!;
+        public string SurName { get; set; } = default!;
+        public string ImageUrl { get; set; } = default!;
         public string VehicleType { get; set; } = default!;
         public string CvUrl { get; set; } = default!;
     }
@@ -24,7 +24,7 @@ public class GetPendingApplications
     {
         public async Task<Result<IQueryable<GetPendingApplicationsResponse>>> Handle(GetPendingApplicationsRequest request, CancellationToken cancellationToken)
         {
-            var people =iPersonRepository.Where(x => x.Role == "Courier" && x.ApplicationStatus=="Pending");
+            var people =iPersonRepository.Where(x => x.Role == "User" && x.ApplicationStatus=="Pending");
             if (people is null)
             {
                 return Result.Fail("No pending courier application!");

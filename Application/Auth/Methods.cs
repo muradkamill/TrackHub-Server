@@ -27,7 +27,7 @@ public class Methods
             audience:configuration["Jwt:audience"],
             claims:claim,
             signingCredentials:creds,
-            expires:DateTime.UtcNow.AddMinutes(100));
+            expires:DateTime.UtcNow.AddMinutes(15));
             
         return new JwtSecurityTokenHandler().WriteToken(tokenDescription);
     }

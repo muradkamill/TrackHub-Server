@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet("{productId:int}/get-comments")]
-        public async Task<IActionResult> GetAllComments(int productId,CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllComments([FromQuery]int productId,CancellationToken cancellationToken)
         {
             var comments = await sender.Send(new GetProductComments.GetProductCommentsRequest()
             {
@@ -37,7 +37,6 @@ namespace WebAPI.Controllers
                 return BadRequest(comments.Errors.Select(x => x.Message));
             }
             return Ok(comments.Value);
-
         }
 
 
@@ -48,6 +47,20 @@ namespace WebAPI.Controllers
             var product =await sender.Send(new GetProductById.GetProductByIdRequest()
             {
                 ProductId = productId
+            },cancellationToken);
+            if (product.IsFailed)
+            {
+                return BadRequest(product.Errors.Select(x => x.Message));
+            }
+            return Ok(product.Value);
+        }
+        [AllowAnonymous]
+        [HttpGet("{productName}")]
+        public async Task<IActionResult> GetProductByName(string productName,CancellationToken cancellationToken)
+        {
+            var product =await sender.Send(new GetProductByName.GetProductByNameRequest()
+            {
+                ProductName= productName
             },cancellationToken);
             if (product.IsFailed)
             {

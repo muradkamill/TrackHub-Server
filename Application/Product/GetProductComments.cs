@@ -3,6 +3,7 @@ using FluentResults;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Product;
 
@@ -28,9 +29,16 @@ public class GetProductComments
     {
         public async Task<Result<List<GetProductCommentsResponse>>> Handle(GetProductCommentsRequest request, CancellationToken cancellationToken)
         {
+            if (!await iCommentRepository.AnyAsync(x => x.ProductId == request.ProductId,cancellationToken))
+            {
+                return Result.Fail("fail");
+            }
             var comments = iCommentRepository.Where(x => x.ProductId == request.ProductId).ToList();
+
             var res = comments.Adapt<List<GetProductCommentsResponse>>();
             return await Task.FromResult(Result.Ok(res));
+
+
         }
     }
 }

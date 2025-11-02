@@ -23,7 +23,6 @@ public class CreateSuggestionToAdmin
                 return Result.Fail("Unauthorized access !");
             var suggestion = request.Adapt<SuggestionEntity>();
             suggestion.PersonFin = personFin;
-            suggestion.SuggestionStatus = nameof(GetSuggestions.SuggestionStatusEnum.Pending);
             await iSuggestionRepository.AddAsync(suggestion,cancellationToken);
             await iUnitOfWork.SaveChangesAsync(cancellationToken);
             return Result.Ok();

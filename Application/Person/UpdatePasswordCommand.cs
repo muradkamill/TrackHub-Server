@@ -23,19 +23,17 @@ public class UpdatePasswordCommand
     }
     public class UpdatePasswordCommandRequest : IRequest<Result>
     {
-        public string PersonFin { get; set; } = default!;
         public string CurrentPassword { get; set; } = default!;
         public string NewPassword { get; set; } = default!;
     }
-    public class UpdatePasswordCommandRequestHandler(IPersonRepository iPersonRepository,IUnitOfWork iUnitOfWork):IRequestHandler<UpdatePasswordCommandRequest,Result>
+    public class UpdatePasswordCommandRequestHandler(IPersonRepository iPersonRepository,IUnitOfWork iUnitOfWork,IHttpContextAccessor httpContextAccessor):IRequestHandler<UpdatePasswordCommandRequest,Result>
     {
         public async Task<Result> Handle(UpdatePasswordCommandRequest request, CancellationToken cancellationToken)
         {
-            var personFin = request.PersonFin;
-            // var personFin = httpContextAccessor.HttpContext!.User.FindFirst("fin")?.Value;
-            // if (string.IsNullOrWhiteSpace(personFin)){
-            //        return Result.Fail("Unauthorized access !");
-            // }
+            var personFin = httpContextAccessor.HttpContext!.User.FindFirst("fin")?.Value;
+            if (string.IsNullOrWhiteSpace(personFin)){
+                   return Result.Fail("Unauthorized access !");
+            }
 
             var person = await iPersonRepository.FirstOrDefaultAsync(x=>x.Fin==personFin,cancellationToken);
 
@@ -46,6 +44,7 @@ public class UpdatePasswordCommand
 
             var newHashedPassword = new PasswordHasher<PersonEntity>().HashPassword(person,request.NewPassword);
             person.PasswordHash = newHashedPassword;
+            iPersonRepository.Update(person);
             await iUnitOfWork.SaveChangesAsync(cancellationToken);
             return Result.Ok();
             

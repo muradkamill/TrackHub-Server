@@ -20,11 +20,9 @@ public class GetOwnApplicationInfo
         public string Fin { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string SurName { get; set; } = default!;
-        public AddressEntity Address { get; set; } = default!;
         public string ImageUrl { get; set; } = default!;
         public string VehicleType { get; set; } = default!;
         public string CvUrl { get; set; } = default!;
-    
         public string ApplicationStatus { get; set; } = default!;
     }
     
@@ -38,13 +36,8 @@ public class GetOwnApplicationInfo
                 return Result.Fail("Unauthorized access !");
 
             var person=await iPersonRepository.FirstOrDefaultAsync(x=>x.Fin==personFin,cancellationToken);
-            if (person.Role==nameof(RegisterCommand.RoleEnum.User) && person.ApplicationStatus!=null)
-            {
-                var application = person.Adapt<GetOwnApplicationInfoResponse>();
-                return Result.Ok(application);
-
-            }
-            return Result.Ok();
+            var application = person.Adapt<GetOwnApplicationInfoResponse>();
+            return Result.Ok(application);
         }
     }
 }

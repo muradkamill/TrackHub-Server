@@ -13,34 +13,23 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Person;
 
-public class UpdateByIdCommand()
+public class UpdateProfilePhoto()
 {
-    public class UpdateByIdRequest():IRequest<Result>
+    public class UpdateProfilePhotoRequest():IRequest<Result>
     {
-        public string PersonFin { get; set; } = default!;
-
-        public string Name { get; set; } = default!;
-        public string SurName { get; set; } = default!;
-    
-        public string Role { get; set; } = default!;
         public IFormFile Image { get; set; } = default!;
 
     }
     
     
-    public class UpdateByIdCommandHandler(IPersonRepository iPersonRepository,IUnitOfWork iUnitOfWork,IWebHostEnvironment env):IRequestHandler<UpdateByIdRequest,Result>
+    public class UpdateProfilePhotoRequestHandler(IPersonRepository iPersonRepository,IUnitOfWork iUnitOfWork,IWebHostEnvironment env,IHttpContextAccessor httpContextAccessor):IRequestHandler<UpdateProfilePhotoRequest,Result>
     {
-        public async Task<Result> Handle(UpdateByIdRequest request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateProfilePhotoRequest request, CancellationToken cancellationToken)
         {
-            var personFin = request.PersonFin;
 
-            // var personFin = httpContextAccessor.HttpContext?.User.FindFirst("fin")?.Value;
-            // if (string.IsNullOrWhiteSpace(personFin))
-            //     return Result.Fail("Unauthorized access !");
-            var textInfo = CultureInfo.InvariantCulture.TextInfo;
-            request.Name = textInfo.ToTitleCase(request.Name.ToLowerInvariant());
-            request.SurName = textInfo.ToTitleCase(request.SurName.ToLowerInvariant());
-            request.Role = textInfo.ToTitleCase(request.Role.ToLowerInvariant());
+            var personFin = httpContextAccessor.HttpContext?.User.FindFirst("fin")?.Value;
+            if (string.IsNullOrWhiteSpace(personFin))
+                return Result.Fail("Unauthorized access !");
             if (request.Image.Length==0)
             {
                 return Result.Fail("Image is not valid");

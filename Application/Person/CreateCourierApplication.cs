@@ -33,17 +33,17 @@ public class CreateCourierApplication
         public IFormFile CvUrl { get; set; } = default!;
         public string VehicleType { get; set; } = default!;
     }
-    public class CreateApplicationCourierRequestHandler(IPersonRepository iPersonRepository,IUnitOfWork iUnitOfWork,IWebHostEnvironment env):IRequestHandler<CreateApplicationCourierRequest,Result>
+    public class CreateApplicationCourierRequestHandler(IPersonRepository iPersonRepository,IUnitOfWork iUnitOfWork,IWebHostEnvironment env,IHttpContextAccessor httpContextAccessor):IRequestHandler<CreateApplicationCourierRequest,Result>
     {
         
         public async Task<Result> Handle(CreateApplicationCourierRequest request, CancellationToken cancellationToken)
         {
-            // var personFin = httpContextAccessor.HttpContext?.User.FindFirst("fin")?.Value;
-            // if (string.IsNullOrWhiteSpace(personFin))
-            // {
-            //     return Result.Fail("Unauthorized access !");
-            // }
-            var personFin = "2222222";
+            var personFin = httpContextAccessor.HttpContext?.User.FindFirst("fin")?.Value;
+            if (string.IsNullOrWhiteSpace(personFin))
+            {
+                return Result.Fail("Unauthorized access !");
+            }
+            // var personFin = "2222222";
 
             var person = await iPersonRepository.FirstOrDefaultAsync(x=>x.Fin==personFin, cancellationToken);
 
