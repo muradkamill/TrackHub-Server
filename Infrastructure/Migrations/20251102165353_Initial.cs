@@ -33,6 +33,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Fin = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SurName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Balance = table.Column<decimal>(type: "money", nullable: false),
@@ -62,7 +65,6 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonFin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Suggestion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    SuggestionStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDelete = table.Column<bool>(type: "bit", nullable: false),

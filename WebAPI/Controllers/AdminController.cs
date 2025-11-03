@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         }
 
 
-        // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("get-suggestions")]
         public async Task<IActionResult> GetSuggestions(CancellationToken cancellationToken)
         {
