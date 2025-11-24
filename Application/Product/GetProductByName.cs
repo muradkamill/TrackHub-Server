@@ -28,7 +28,8 @@ public class GetProductByName
         public async Task<Result<IQueryable<GetProductByNameResponse>>> Handle(GetProductByNameRequest request, CancellationToken cancellationToken)
         {
             var list = new List<GetProductByNameResponse>();
-            var products = await iProductRepository.Where(x => x.Name == request.ProductName)
+            var products = await iProductRepository
+                .Where(x => EF.Functions.Like(x.Name, $"%{request.ProductName}%"))
                 .ToListAsync(cancellationToken);
             foreach (var product in products)
             {
