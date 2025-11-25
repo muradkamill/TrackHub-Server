@@ -35,9 +35,6 @@ public class AppDbContext(DbContextOptions options) :DbContext(options)
 
 
 
-
-
-
         modelBuilder.Entity<CategoryEntity>()
             .HasMany(x => x.CategoryToSubCategory)
             .WithOne(x => x.Category)

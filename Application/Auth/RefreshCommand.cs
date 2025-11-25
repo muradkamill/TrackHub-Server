@@ -24,12 +24,12 @@ public class RefreshCommand
     {
         public async Task<Result<RefreshResponse>> Handle(RefreshRequest request, CancellationToken cancellationToken)
         {
-            var person =await iPersonRepository.FirstOrDefaultAsync(x=>x.RefreshToken==request.RefreshToken, cancellationToken);
-
-            if (!await iPersonRepository.AnyAsync(x=>x.Fin==person.Fin,cancellationToken))
+            if (!await iPersonRepository.AnyAsync(x=>x.RefreshToken==request.RefreshToken, cancellationToken))
             {
-                return Result.Fail("This Person is not exist!");
+                return Result.Fail("Refresh Token Expired");
+
             }
+            var person =await iPersonRepository.FirstOrDefaultAsync(x=>x.RefreshToken==request.RefreshToken, cancellationToken);
 
             if (request.RefreshToken != person.RefreshToken)
             {
