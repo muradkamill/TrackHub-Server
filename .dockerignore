@@ -1,0 +1,38 @@
+# flyctl launch added from .gitignore
+**/bin
+**/obj
+packages
+**/riderModule.iml
+_ReSharper.Caches
+**/appsettings.Development.json
+
+# flyctl launch added from .idea/.idea.TrackHub/.idea/.gitignore
+# Default ignored files
+.idea/.idea.TrackHub/.idea/shelf
+.idea/.idea.TrackHub/.idea/workspace.xml
+# Rider ignored files
+.idea/.idea.TrackHub/.idea/modules.xml
+.idea/.idea.TrackHub/.idea/.idea.TrackHub.iml
+.idea/.idea.TrackHub/.idea/contentModel.xml
+.idea/.idea.TrackHub/.idea/projectSettingsUpdater.xml
+# Editor-based HTTP Client requests
+.idea/.idea.TrackHub/.idea/httpRequests
+# Datasource local storage ignored files
+.idea/.idea.TrackHub/.idea/dataSources
+.idea/.idea.TrackHub/.idea/dataSources.local.xml
+
+# flyctl launch added from .idea/.idea.TrackHub-Original/.idea/.gitignore
+# Default ignored files
+.idea/.idea.TrackHub-Original/.idea/shelf
+.idea/.idea.TrackHub-Original/.idea/workspace.xml
+# Rider ignored files
+.idea/.idea.TrackHub-Original/.idea/modules.xml
+.idea/.idea.TrackHub-Original/.idea/projectSettingsUpdater.xml
+.idea/.idea.TrackHub-Original/.idea/contentModel.xml
+.idea/.idea.TrackHub-Original/.idea/.idea.TrackHub-Original.iml
+# Editor-based HTTP Client requests
+.idea/.idea.TrackHub-Original/.idea/httpRequests
+# Datasource local storage ignored files
+.idea/.idea.TrackHub-Original/.idea/dataSources
+.idea/.idea.TrackHub-Original/.idea/dataSources.local.xml
+fly.toml
