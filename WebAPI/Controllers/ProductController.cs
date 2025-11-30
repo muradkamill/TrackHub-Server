@@ -39,6 +39,21 @@ namespace WebAPI.Controllers
             return Ok(comments.Value);
         }
 
+        [AllowAnonymous]
+        [HttpGet("get-autocomplete")]
+        public async Task<IActionResult> GetAutoComplete([FromQuery]string? productName,CancellationToken cancellationToken)
+        {
+            var autoComplete = await sender.Send(new GetAutoComplete.GetAutoCompleteRequest
+            {
+                Text = productName
+            },cancellationToken);
+            if (autoComplete.IsFailed)
+            {
+                return BadRequest(autoComplete.Errors.Select(x => x.Message));
+            }
+            return Ok(autoComplete.Value);
+        }
+
 
         [AllowAnonymous]
         [HttpGet("{productId:int}")]

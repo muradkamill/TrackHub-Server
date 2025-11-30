@@ -15,7 +15,7 @@ public class GetSubCategoryName
     {
         public async Task<Result<string>> Handle(GetSubCategoryNameRequest request, CancellationToken cancellationToken)
         {
-            var subCategory =await iSubCategoryRepository.FirstOrDefaultAsync(x=>x.CategoryId==request.SubCategoryId, cancellationToken);
+            var subCategory =await iSubCategoryRepository.FirstOrDefaultAsync(x=>x.Id==request.SubCategoryId, cancellationToken);
             return Result.Ok(subCategory.SubCategoryName);
 
         }
