@@ -18,9 +18,11 @@ public class GetOwnerProducts
     {
         public int Id { get; set; }
         public string OwnerFin { get; set; } = default!;
+        public string Description { get; set; } = default!;
         public string Name { get; set; } = default!;
         public decimal Price { get; set; }
         public decimal ProductRate { get; set; }
+        public decimal Weight { get; set; }
         public int StockQuantity { get; set; }
         public string ApplicationStatus { get; set; } = default!;
         public string SubCategoryName { get; set; } = default!;
