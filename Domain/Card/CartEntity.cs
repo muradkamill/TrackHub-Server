@@ -15,7 +15,7 @@ public class CartEntity:AuditLogging
     
     public string OrderStatus { get; set; } = default!;
     
-    public string? VehicleType { get; set; } = default!;
+    public string? VehicleType { get; set; }
     public bool IsSelected { get; set; }
 
 
