@@ -7,7 +7,6 @@ using Scalar.AspNetCore;
 using WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
-// builder.WebHost.UseUrls("http://+:8080");
 builder.Services.AddSingleton(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 builder.Services.AddOpenApi();
@@ -34,7 +33,7 @@ builder.Services.AddCors(options =>
         policy  =>
         {
             policy
-                .WithOrigins("http://localhost:4200") // Angular portunu ekle
+                .WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
