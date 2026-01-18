@@ -38,7 +38,6 @@ public class GetByNameCartData
             var personFin = httpContextAccessor.HttpContext!.User.FindFirst("fin")?.Value;
             if (string.IsNullOrWhiteSpace(personFin))
                 return Result.Fail("Unauthorized access!");
-            // var personFin = "820RD60";
 
             var response = new List<GetByNameCartDataResponse>();
 
