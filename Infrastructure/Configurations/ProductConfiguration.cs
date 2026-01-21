@@ -16,11 +16,6 @@ public class ProductConfiguration:IEntityTypeConfiguration<ProductEntity>
         builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Price).HasColumnType("decimal(18,2)");
         builder.Property(x => x.Weight).HasColumnType("decimal(18,2)");
-        // builder.Property(p => p.ImageUrls)
-        //     .HasConversion(
-        //         v => string.Join(";", v),
-        //         v => v.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList()
-        //     );
 
         
     }

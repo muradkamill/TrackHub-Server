@@ -40,7 +40,7 @@ public class GetProductById
             {
                 return Result.Fail("Product is not found!");
             }
-
+            
             var product = await iProductRepository.FirstOrDefaultAsync(x => x.Id == request.ProductId, cancellationToken);
             var owner =await iPersonRepository.FirstOrDefaultAsync(x=>x.Fin==product.OwnerFin, cancellationToken);
             var subCategory = await iSubCategoryRepository.FirstOrDefaultAsync(x=>x.Id==product.SubCategoryId,cancellationToken);

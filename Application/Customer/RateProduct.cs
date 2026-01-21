@@ -40,14 +40,13 @@ public class RateProduct
 
 
     }
-    public class RateProductRequestHandler(ICommentRepository iCommentRepository,IProductRepository iProductRepository,IUnitOfWork iUnitOfWork):IRequestHandler<RateProductRequest,Result>
+    public class RateProductRequestHandler(ICommentRepository iCommentRepository,IProductRepository iProductRepository,IUnitOfWork iUnitOfWork,IHttpContextAccessor iHttpContextAccessor):IRequestHandler<RateProductRequest,Result>
     {
         public async Task<Result> Handle(RateProductRequest request, CancellationToken cancellationToken)
         {
-            // var personFin = iHttpContextAccessor.HttpContext!.User.FindFirst("fin")?.Value;
-            // if (string.IsNullOrWhiteSpace(personFin))
-            //     return Result.Fail("Unauthorized access!");
-            var personFin = "1111111";
+            var personFin = iHttpContextAccessor.HttpContext!.User.FindFirst("fin")?.Value;
+            if (string.IsNullOrWhiteSpace(personFin))
+                return Result.Fail("Unauthorized access!");
             var product = await iProductRepository.FirstOrDefaultAsync(x => x.Id == request.ProductId, cancellationToken);
             product.RateQuantity += 1;
             if (request.ProductComment != null)

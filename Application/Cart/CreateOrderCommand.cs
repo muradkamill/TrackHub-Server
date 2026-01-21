@@ -47,7 +47,6 @@ public class CreateOrderCommand
             var personFin = httpContextAccessor.HttpContext!.User.FindFirst("fin")?.Value;
             if (string.IsNullOrWhiteSpace(personFin))
                 return Result.Fail("Unauthorized access!");
-            // string personFin = "2222222";
             var textInfo = CultureInfo.InvariantCulture.TextInfo;
             request.VehicleType = textInfo.ToTitleCase(request.VehicleType.ToLowerInvariant());
             if (!Enum.IsDefined(typeof(CreateCourierApplication.VehicleTypeEnum),request.VehicleType))
