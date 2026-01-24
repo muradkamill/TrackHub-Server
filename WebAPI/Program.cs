@@ -33,7 +33,7 @@ builder.Services.AddCors(options =>
         policy  =>
         {
             policy
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins()
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
@@ -54,7 +54,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.MapControllers();
 app.MapHub<NotificationHub>("/hub/notifications");
 
