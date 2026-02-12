@@ -25,6 +25,7 @@ public class AppDbContext(DbContextOptions options) :DbContext(options)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         modelBuilder.Entity<PersonEntity>().HasQueryFilter(x => x.IsDelete == false);
         modelBuilder.Entity<CategoryEntity>().HasQueryFilter(x => x.IsDelete == false);
         modelBuilder.Entity<ProductEntity>().HasQueryFilter(x => x.IsDelete == false);

@@ -1,7 +1,6 @@
 using System.Globalization;
 using Application;
 using Infrastructure;
-using Infrastructure.SignalR;
 using Microsoft.AspNetCore.OData;
 using Scalar.AspNetCore;
 using WebAPI;
@@ -33,7 +32,7 @@ builder.Services.AddCors(options =>
         policy  =>
         {
             policy
-                .WithOrigins()
+                .WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();

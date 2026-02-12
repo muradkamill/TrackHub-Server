@@ -8,6 +8,7 @@ public class ProductConfiguration:IEntityTypeConfiguration<ProductEntity>
 {
     public void Configure(EntityTypeBuilder<ProductEntity> builder)
     {
+
         builder.HasKey(x => x.Id);
         builder.Property(x => x.ProductRate).HasColumnType("decimal(18,1)").IsRequired();
 
@@ -17,6 +18,6 @@ public class ProductConfiguration:IEntityTypeConfiguration<ProductEntity>
         builder.Property(x => x.Price).HasColumnType("decimal(18,2)");
         builder.Property(x => x.Weight).HasColumnType("decimal(18,2)");
 
-        
+
     }
 }

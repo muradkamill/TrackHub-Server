@@ -1,7 +1,9 @@
 using Application.Interfaces;
+using Domain.Card;
 using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Cart;
 
@@ -15,6 +17,7 @@ public class ChangeSelectCartCommand
     {
         public async Task<Result> Handle(ChangeSelectCartCommandRequest request, CancellationToken cancellationToken)
         {
+
             var personFin = httpContextAccessor.HttpContext?.User.FindFirst("fin")?.Value;
             if (string.IsNullOrWhiteSpace(personFin))
                 return Result.Fail("Unauthorized access !");

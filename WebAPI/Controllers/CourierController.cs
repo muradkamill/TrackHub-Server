@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
             return Ok(application.Value);
         }
 
-        [Authorize(Roles = "Courier")]
+        // [Authorize(Roles = "Courier")]
         [HttpGet("get-pending-carts")]
         public async Task<IActionResult> GetPendingCart(CancellationToken cancellationToken)
         {
